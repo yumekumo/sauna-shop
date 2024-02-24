@@ -6,6 +6,7 @@ import (
 	"gopkg.in/testfixtures.v2"
 
 	"github.com/yumekumo/sauna-shop/infrastructure/mysql/db"
+	"github.com/yumekumo/sauna-shop/infrastructure/mysql/db_test"
 	"github.com/yumekumo/sauna-shop/infrastructure/mysql/db/dbgen"
 )
 
