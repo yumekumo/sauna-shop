@@ -11,18 +11,32 @@ on:
 
 
 jobs:
-  ci:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - uses: actions/setup-go@v3
         with:
           go-version-file: app/go.mod
           cache: true
           cache-dependency-path: app/go.sum
-
       - name: test
         run: |
           make test
 
+  golangci-lint:
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write 
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-golangci-lint@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          go_version: 1.21.x
+          reporter: github-pr-review
+          level: warning
+          conf: .golangci.yml
